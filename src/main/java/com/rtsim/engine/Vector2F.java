@@ -16,15 +16,15 @@ public class Vector2F {
         return y;
     }
 
-    Vector2F normalize() {
+    public Vector2F normalize() {
         return scale(1/magnitude());
     }
 
-    Vector2F add(Vector2F other) {
+    public Vector2F add(Vector2F other) {
         return new Vector2F(x + other.x, y + other.y);
     }
 
-    Vector2F scale(float scalar) {
+    public Vector2F scale(float scalar) {
         return new Vector2F(x * scalar, y * scalar);
     }
 
@@ -32,11 +32,11 @@ public class Vector2F {
         return new Vector2F(x - other.x, y - other.y);
     }
 
-    float dot(Vector2F other) {
+    public float dot(Vector2F other) {
         return x * other.x + y * other.y;
     }
 
-    float magnitude() {
+    public float magnitude() {
         return (float) Math.sqrt(x * x + y * y);
     }
  

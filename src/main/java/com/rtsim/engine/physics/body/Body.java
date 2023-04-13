@@ -1,20 +1,25 @@
 package com.rtsim.engine.physics.body;
 
 import com.rtsim.engine.Vector2F;
-import com.rtsim.engine.graphics.Ray;
+import com.rtsim.engine.graphics.Color;
+import com.rtsim.engine.graphics.raytracing.Ray;
 
 public abstract class Body {
     private float percentLightAbsorbed;
 
-    protected Body(float percentLightAbsorbed) {
+    protected Body(float percentLightAbsorbed, Vector2F location) {
         this.percentLightAbsorbed = percentLightAbsorbed;
     }
 
     public float getPercentLightAbsorbed() {
         return percentLightAbsorbed;
     }
-    public abstract boolean intersects(Ray ray);
-    public abstract Vector2F getReflection(Ray ray);
-    public abstract Vector2F getRefraction(Ray ray);
+    public abstract BodyIntersection intersection(Ray ray);
+    public abstract Ray getReflection(Ray ray);
+    public abstract Ray getRefraction(Ray ray);
+    public abstract Color getColor(Vector2F location);
+    public Vector2F getLocation() {
+        return null; // TODO transforms
+    }
 
 }
