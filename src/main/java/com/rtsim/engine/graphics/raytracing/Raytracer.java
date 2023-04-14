@@ -1,5 +1,6 @@
 package com.rtsim.engine.graphics.raytracing;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public abstract class Raytracer {
         }
     }
 
-    protected void traceRay(List<Body> bodies, Ray ray) {
+    protected void traceRay(Collection<Body> bodies, Ray ray) {
         for (Body body : bodies) {
             BodyIntersection intersection = body.intersection(ray);
             if (intersection != null) {
@@ -73,6 +74,6 @@ public abstract class Raytracer {
         }
     }
 
-    public abstract void buildScene(List<Body> bodies);
+    public abstract void buildScene(Collection<Body> bodies);
 
 }

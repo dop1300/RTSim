@@ -51,4 +51,17 @@ public class Viewport {
             render[mappedPoint.getX()][mappedPoint.getY()].add(update.getColor().scale(intensity));
         }
     }
+
+    public Color[][] getImage() {
+        return render;
+    }
+
+    public int getXResolution() {
+        return xResolution;
+    }
+
+    public int getYResolution() {
+        return yResolution;
+    }
+
 }

@@ -19,4 +19,16 @@ public class Color {
         b = (b + other.b) / 2;
         
     }
+
+    public float getRed() {
+        return r;
+    }
+
+    public float getGreen() {
+        return g;
+    }
+
+    public float getBlue() {
+        return b;
+    }
 }
