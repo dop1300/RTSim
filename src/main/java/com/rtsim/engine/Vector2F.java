@@ -39,5 +39,9 @@ public class Vector2F {
     public float magnitude() {
         return (float) Math.sqrt(x * x + y * y);
     }
+
+    public float distance(Vector2F other) {
+        return (float) Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(y - other.y, 2));
+    }
  
 }

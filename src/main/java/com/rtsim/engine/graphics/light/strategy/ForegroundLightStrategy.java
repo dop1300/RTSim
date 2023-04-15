@@ -9,7 +9,7 @@ public class ForegroundLightStrategy implements LightingStrategy {
     
     public ViewUpdate[] update(Ray ray, Body body, BodyIntersection intersection) {
         return new ViewUpdate[] {
-            new ViewUpdate(intersection.getIntersectionLocation(), ray.getLightIntensity(), body.getColor(intersection.getIntersectionLocation()), true)
+            new ViewUpdate(intersection.getIntersectionLocation(), ray.getIntensity(), body.getColor(intersection.getIntersectionLocation()), true)
         };
     }
 }

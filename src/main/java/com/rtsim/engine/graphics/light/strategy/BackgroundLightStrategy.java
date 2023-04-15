@@ -18,7 +18,7 @@ public class BackgroundLightStrategy implements LightingStrategy {
         float dx = (intersection.getIntersectionLocation().getX() - ray.getLocation().getX()) / updateCount;
         float dy = (intersection.getIntersectionLocation().getY() - ray.getLocation().getY()) / updateCount;
         for (int step = 0; step < updateCount; step++) {
-            updates[step] = new ViewUpdate(ray.getLocation().add(new Vector2F(dx * step, dy * step)), ray.getLightIntensity(), ray.getColor(), false);
+            updates[step] = new ViewUpdate(ray.getLocation().add(new Vector2F(dx * step, dy * step)), ray.getIntensity(), ray.getColor(), false);
         }
         return updates;
     }

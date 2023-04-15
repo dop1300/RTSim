@@ -14,9 +14,8 @@ public abstract class Body {
     public float getPercentLightAbsorbed() {
         return percentLightAbsorbed;
     }
+    
     public abstract BodyIntersection intersection(Ray ray);
-    public abstract Ray getReflection(Ray ray);
-    public abstract Ray getRefraction(Ray ray);
     public abstract Color getColor(Vector2F location);
     public Vector2F getLocation() {
         return null; // TODO transforms
