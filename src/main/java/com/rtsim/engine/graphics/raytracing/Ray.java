@@ -7,12 +7,10 @@ import com.rtsim.engine.graphics.Color;
 public class Ray {
     private Vector2F start, direction;
     private int remainingBounces;
-    private float intensity;
 
-    public Ray(Vector2F start, Vector2F direction, float intensity, int bounces) {
+    public Ray(Vector2F start, Vector2F direction, int bounces) {
         this.start = start;
         this.direction = direction;
-        this.intensity = intensity;
         remainingBounces = bounces;
     }
 
@@ -31,10 +29,6 @@ public class Ray {
     public void decreaseBounces() {
         remainingBounces--;
     }
-    
-    public float getIntensity() {
-        return intensity;
-    }
 
     public void setLocation(Vector2F location) {
         start = location;
@@ -47,12 +41,5 @@ public class Ray {
     public Vector2F getLocation() {
         return null;
     }
-
-    public Color getColor() {
-        return null;
-    }
-
-
-
     
 }

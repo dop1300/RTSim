@@ -31,4 +31,9 @@ public class Color {
     public float getBlue() {
         return b;
     }
+
+    public Color mix(Color color, float factor) {
+        float complement = 1 - factor;
+        return new Color((r * complement + color.r * factor)/2,(g * complement + color.g * factor)/2,(b * complement + color.b * factor)/2);
+    }
 }

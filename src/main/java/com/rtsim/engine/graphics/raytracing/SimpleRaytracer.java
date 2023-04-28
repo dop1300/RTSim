@@ -12,11 +12,19 @@ public class SimpleRaytracer extends Raytracer {
         super(viewport);
     }
 
+
     @Override
-    public void buildScene(Collection<Body> bodies) {
-        Ray ray;
-        while ((ray = popRay()) != null) {
-            traceRay(bodies, ray);
+    public void renderScene(Collection<Body> bodies) {
+        try {
+            RayPool pool = getRayPool();
+            while(pool != null) {
+                while(pool.hasRaysRemaining()) {
+                    traceRay(bodies, pool, pool.popRay());
+                }
+                pool = getRayPool();
+            }
+        } catch(InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
     

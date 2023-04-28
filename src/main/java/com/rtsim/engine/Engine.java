@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.rtsim.engine.graphics.Color;
+import com.rtsim.engine.graphics.SceneSettings;
 import com.rtsim.engine.graphics.Viewport;
 import com.rtsim.engine.graphics.light.Light;
 import com.rtsim.engine.graphics.raytracing.Raytracer;
@@ -23,6 +24,7 @@ public class Engine {
     private Map<String,Body> bodies;
     private Raytracer raytracer;
     private Viewport viewport;
+    private SceneSettings settings;
     private int raysPerLight;
 
     public Engine(int xResolution, int yResolution, int raysPerLight) {
@@ -44,8 +46,7 @@ public class Engine {
 
     public Color[][] createImage() {
         viewport.clearViewport();
-        raytracer.buildRayPool(lights.values().toArray(new Light[0]), raysPerLight);
-        raytracer.buildScene(bodies.values());
+        raytracer.render(bodies.values(), lights.values(), settings);
         return viewport.getImage();
     }
 

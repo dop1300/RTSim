@@ -1,6 +1,7 @@
 package com.rtsim.engine.graphics.light.strategy;
 
 import com.rtsim.engine.Vector2F;
+import com.rtsim.engine.graphics.Color;
 import com.rtsim.engine.graphics.ViewUpdate;
 import com.rtsim.engine.graphics.raytracing.Ray;
 import com.rtsim.engine.physics.body.Body;
@@ -13,12 +14,12 @@ public class BackgroundLightStrategy implements LightingStrategy {
         this.updateCount = updateCount;
     }
     
-    public ViewUpdate[] update(Ray ray, Body body, BodyIntersection intersection) {
+    public ViewUpdate[] update(Ray ray, Body body, BodyIntersection intersection, float intensity, Color color) {
         ViewUpdate[] updates = new ViewUpdate[updateCount];
         float dx = (intersection.getIntersectionLocation().getX() - ray.getLocation().getX()) / updateCount;
         float dy = (intersection.getIntersectionLocation().getY() - ray.getLocation().getY()) / updateCount;
         for (int step = 0; step < updateCount; step++) {
-            updates[step] = new ViewUpdate(ray.getLocation().add(new Vector2F(dx * step, dy * step)), ray.getIntensity(), ray.getColor(), false);
+            updates[step] = new ViewUpdate(ray.getLocation().add(new Vector2F(dx * step, dy * step)), intensity, color, false);
         }
         return updates;
     }
