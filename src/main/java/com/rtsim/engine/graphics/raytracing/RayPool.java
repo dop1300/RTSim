@@ -2,26 +2,13 @@ package com.rtsim.engine.graphics.raytracing;
 
 import java.util.LinkedList;
 
-import com.rtsim.engine.graphics.Color;
-import com.rtsim.engine.graphics.light.strategy.LightingStrategy;
-import com.rtsim.engine.graphics.raytracing.behavior.BodyBehavior;
-
 public class RayPool {
     public static final long POOL_WAIT = 50;
-    private LightingStrategy[] lightingStrategies;
-    private BodyBehavior[] rayBehaviors;
     private LinkedList<Ray> rays;
-    private float intensity;
-    private Color color;
     private Object lock;
     private int activeRays;
 
-    public RayPool(LightingStrategy[] lightingStrategies, BodyBehavior[] rayBehaviors,
-            float intensity, Color color) {
-        this.lightingStrategies = lightingStrategies;
-        this.rayBehaviors = rayBehaviors;
-        this.intensity = intensity;
-        this.color = color;
+    public RayPool() {
         rays = new LinkedList<>();
         activeRays = 0;
     }
@@ -50,23 +37,6 @@ public class RayPool {
             activeRays--;
         }
     }
-
-
-    public float getIntensity() {
-        return intensity;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-	public BodyBehavior[] getRayBehaviors() {
-		return rayBehaviors;
-	}
-
-	public LightingStrategy[] getLightingStrategies() {
-		return lightingStrategies;
-	}
 
 	public boolean hasRaysRemaining() {
 		synchronized(lock) {

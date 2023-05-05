@@ -1,14 +1,14 @@
 package com.rtsim.engine.graphics.raytracing;
 
 
-import com.rtsim.engine.Vector2F;
+import com.rtsim.engine.VectorD;
 import com.rtsim.engine.graphics.Color;
 
 public class Ray {
-    private Vector2F start, direction;
+    private VectorD start, direction;
     private int remainingBounces;
 
-    public Ray(Vector2F start, Vector2F direction, int bounces) {
+    public Ray(VectorD start, VectorD direction, int bounces) {
         this.start = start;
         this.direction = direction;
         remainingBounces = bounces;
@@ -18,11 +18,11 @@ public class Ray {
         return remainingBounces > 0;
     }
 
-    public Vector2F getDirection() {
+    public VectorD getDirection() {
         return direction;
     }
 
-    public void setDirection(Vector2F direction) {
+    public void setDirection(VectorD direction) {
         this.direction = direction;
     }
 
@@ -30,15 +30,15 @@ public class Ray {
         remainingBounces--;
     }
 
-    public void setLocation(Vector2F location) {
+    public void setLocation(VectorD location) {
         start = location;
     }
 
-    public Vector2F getStart() {
+    public VectorD getStart() {
         return start;
     }
 
-    public Vector2F getLocation() {
+    public VectorD getLocation() {
         return null;
     }
     

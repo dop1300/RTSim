@@ -1,15 +1,15 @@
 package com.rtsim.engine.physics.body;
 
-import com.rtsim.engine.Vector2F;
+import com.rtsim.engine.VectorD;
 
 public class BodyIntersection {
-    private Vector2F intersectionLocation, intersectionNormal;
+    private VectorD intersectionLocation, intersectionNormal;
 
-    public Vector2F getIntersectionLocation() {
+    public VectorD getIntersectionLocation() {
         return intersectionLocation;
     }
 
-    public Vector2F getIntersectionNormal() {
+    public VectorD getIntersectionNormal() {
         return intersectionNormal;
     }
     

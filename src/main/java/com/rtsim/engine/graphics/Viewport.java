@@ -1,15 +1,15 @@
 package com.rtsim.engine.graphics;
 
 import com.rtsim.engine.Point2I;
-import com.rtsim.engine.Vector2F;
+import com.rtsim.engine.VectorD;
 
 public class Viewport {
     private int xResolution, yResolution;
-    private Vector2F location, size;
+    private VectorD location, size;
     private float backgroundPenalty;
     private Color[][] render;
  
-    public Viewport(int xResolution, int yResolution, Vector2F location, Vector2F size, float backgroundPenalty) {
+    public Viewport(int xResolution, int yResolution, VectorD location, VectorD size, float backgroundPenalty) {
         this.xResolution = xResolution;
         this.yResolution = yResolution;
         this.location = location;
@@ -27,17 +27,18 @@ public class Viewport {
         }
     }
 
-    public boolean containsVector(Vector2F viewLocation) {
-        return viewLocation.getX() < location.getX() && viewLocation.getY() < location.getY()
-                && viewLocation.getX() + size.getX() > location.getX() && viewLocation.getY() + size.getY() > location.getY();
+    public boolean containsVector(VectorD viewLocation) {
+        return true;
+        // return viewLocation.getX() < location.getX() && viewLocation.getY() < location.getY()
+                // && viewLocation.getX() + size.getX() > location.getX() && viewLocation.getY() + size.getY() > location.getY();
     }
 
-    public Point2I mapViewPoint(Vector2F viewLocation) {
-        if (containsVector(viewLocation)) {
-            Vector2F inside = location.subtract(viewLocation);
-            return new Point2I((int) (xResolution * (inside.getX() / size.getX())), 
-                                (int) (yResolution * (inside.getY() / size.getY())));
-        } else
+    public Point2I mapViewPoint(VectorD viewLocation) {
+        // if (containsVector(viewLocation)) {
+        //     VectorD inside = location.subtract(viewLocation);
+        //     return new Point2I((int) (xResolution * (inside.getX() / size.getX())), 
+        //                         (int) (yResolution * (inside.getY() / size.getY())));
+        // } else
             return null;
     }
 

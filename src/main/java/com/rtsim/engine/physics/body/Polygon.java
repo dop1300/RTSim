@@ -1,12 +1,12 @@
 package com.rtsim.engine.physics.body;
 
-import com.rtsim.engine.Vector2F;
+import com.rtsim.engine.VectorD;
 import com.rtsim.engine.graphics.Color;
 import com.rtsim.engine.graphics.raytracing.Ray;
 
 public class Polygon extends Body {
     
-    protected Polygon(float percentLightAbsorbed, Vector2F location, Vector2F[] points) {
+    protected Polygon(float percentLightAbsorbed, VectorD location, VectorD[] points) {
         super(percentLightAbsorbed, location);
     }
 
@@ -16,7 +16,7 @@ public class Polygon extends Body {
     }
 
     @Override
-    public Color getColor(Vector2F location) {
+    public Color getColor(VectorD location) {
         throw new UnsupportedOperationException("Unimplemented method 'getColor'");
     }
     

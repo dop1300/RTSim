@@ -1,8 +1,6 @@
 package com.rtsim.engine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.rtsim.engine.graphics.Color;
@@ -30,8 +28,8 @@ public class Engine {
     public Engine(int xResolution, int yResolution, int raysPerLight) {
         bodies = new HashMap<>();
         lights = new HashMap<>();
-        viewport = new Viewport(xResolution, yResolution, new Vector2F(DEFAULT_X_LOCATION,
-                                    DEFAULT_Y_LOCATION), new Vector2F(DEFAULT_X_SIZE, DEFAULT_Y_SIZE),
+        viewport = new Viewport(xResolution, yResolution, new VectorD(DEFAULT_X_LOCATION,
+                                    DEFAULT_Y_LOCATION), new VectorD(DEFAULT_X_SIZE, DEFAULT_Y_SIZE),
                                     DEFAULT_BACKGROUND_PENALTY);
         raytracer = new SimpleRaytracer(viewport);
         this.raysPerLight = raysPerLight;
@@ -39,8 +37,8 @@ public class Engine {
 
     public void updateViewport(int xResolution, int yResolution, float xLocation, float yLocation,
                                 float xSize, float ySize, float backgroundPenalty) {
-        viewport = new Viewport(xResolution, yResolution, new Vector2F(xLocation, yLocation), 
-                                    new Vector2F(xSize, ySize), backgroundPenalty);
+        viewport = new Viewport(xResolution, yResolution, new VectorD(xLocation, yLocation), 
+                                    new VectorD(xSize, ySize), backgroundPenalty);
             
     }
 

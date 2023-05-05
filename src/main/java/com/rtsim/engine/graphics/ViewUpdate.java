@@ -1,21 +1,21 @@
 package com.rtsim.engine.graphics;
 
-import com.rtsim.engine.Vector2F;
+import com.rtsim.engine.VectorD;
 
 public class ViewUpdate {
-    private Vector2F location;
+    private VectorD location;
     private float intensity;
     private Color color;
     private boolean foreground;
 
-    public ViewUpdate(Vector2F location, float intensity, Color color, boolean foreground) {
+    public ViewUpdate(VectorD location, float intensity, Color color, boolean foreground) {
         this.location = location;
         this.intensity = intensity;
         this.color = color;
         this.foreground = foreground;
     }
 
-    public Vector2F getLocation() {
+    public VectorD getLocation() {
         return location;
     }
 
