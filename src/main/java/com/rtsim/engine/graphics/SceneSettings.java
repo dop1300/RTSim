@@ -7,7 +7,7 @@ public class SceneSettings {
         this.raysPerLight = raysPerLight;
     }
     
-    public int getRaysPerLight() {
+    public int getRayCount() {
         return raysPerLight;
     }
 

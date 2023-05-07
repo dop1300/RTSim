@@ -23,7 +23,7 @@ public abstract class Body {
 
     
     public abstract BodyIntersection intersection(Ray ray);
-    public abstract Color getColor(VectorD location, Texture texture);
+    public abstract Color getColor(VectorD location);
     public VectorD getLocation() {
         return null; // TODO transforms
     }
@@ -32,7 +32,7 @@ public abstract class Body {
         return behaviors;
     }
 
-    public void setBehaviors(BodyBehavior behaviors) {
+    public void setBehaviors(BodyBehavior[] behaviors) {
         this.behaviors = behaviors;
     }
 

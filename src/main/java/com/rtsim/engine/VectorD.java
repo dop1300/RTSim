@@ -1,5 +1,6 @@
 package com.rtsim.engine;
 
+import java.util.Arrays;
 import java.util.function.Function;
 
 public class VectorD {
@@ -44,11 +45,23 @@ public class VectorD {
         return Math.sqrt(map(i -> (double) Math.pow(values[i] - other.values[i], 2)).sum());
     }
 
+    public double get(int dimension) {
+        return values[dimension];
+    }
+
     public double sum() {
         double sum = 0;
         for (double f : values)
             sum += f;
         return sum;
+    }
+
+    public MatrixD asMatrixD() {
+        return new MatrixD(new double[][] {Arrays.copyOf(values, values.length)});
+    }
+
+    public VectorD cross(VectorD vertical) {
+        return null; // TODO finish
     }
  
 }

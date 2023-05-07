@@ -12,5 +12,9 @@ public class BodyIntersection {
     public VectorD getIntersectionNormal() {
         return intersectionNormal;
     }
+
+    public Body getBody() {
+        return null;
+    }
     
 }

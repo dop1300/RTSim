@@ -2,7 +2,6 @@ package com.rtsim.engine.graphics.raytracing;
 
 
 import com.rtsim.engine.VectorD;
-import com.rtsim.engine.graphics.Color;
 
 public class Ray {
     private VectorD start, direction;

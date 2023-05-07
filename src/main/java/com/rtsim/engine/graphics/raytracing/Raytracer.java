@@ -1,82 +1,58 @@
 package com.rtsim.engine.graphics.raytracing;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import com.rtsim.engine.IntersectionTester;
 import com.rtsim.engine.graphics.SceneSettings;
-import com.rtsim.engine.graphics.ViewUpdate;
-import com.rtsim.engine.graphics.Viewport;
-import com.rtsim.engine.graphics.camera.Projection;
+import com.rtsim.engine.graphics.view.Viewport;
 import com.rtsim.engine.graphics.light.Light;
-import com.rtsim.engine.graphics.light.strategy.LightingStrategy;
 import com.rtsim.engine.graphics.raytracing.behavior.BodyBehavior;
-import com.rtsim.engine.graphics.raytracing.behavior.RaytraceStep;
 import com.rtsim.engine.physics.body.Body;
 import com.rtsim.engine.physics.body.BodyIntersection;
 
 public abstract class Raytracer {
-    private LightingStrategy[] lightingStrategies;
-    private Viewport viewport;
-    protected RayPool pool;
-    private Projection projection;
+    private RayPool pool;
+    private Viewport projection;
 
-    protected Raytracer(Viewport viewport, Projection projection) {
-        this.viewport = viewport;
+    protected Raytracer(Viewport projection) {
         this.projection = projection;
     }
 
-    private void buildRayPool(int rayCount) {
+    private void buildRayPool(int rayCount, int rayBounces) {
         pool = new RayPool();
         for (int r = 0; r < rayCount; r++) {
-            pool.pushRay(projection.createRay(), true);
+            pool.pushRay(projection.createRay(rayBounces), true);
         }
     }
     
-
-    private void update(RayPool pool, RaytraceStep raytraceStep) {
-        viewport.updateView(raytraceStep.viewUpdates);
-        for (Ray addedRay : raytraceStep.createdRays) {
-            if (addedRay.hasBouncesRemaining()) {
-                pool.pushRay(addedRay, true);
-            }
-        }
-    }
-
-    private RaytraceStep makeUpdates(Ray ray, Body body, BodyIntersection intersection,
+    private void makeUpdates(RayPool pool, Ray ray, Body body, BodyIntersection intersection,
             Collection<Body> bodies, Collection<Light> lights) {
-        // Create rays for reflection, refraction, etc.
-        ArrayList<Ray> rays = new ArrayList<>();
+        // Create rays for reflection, refraction, etc. 
         for (BodyBehavior behavior : body.getBehaviors()) {
-            rays.addAll(Arrays.asList(behavior.onIntersection(ray, body, intersection)));
+            for (Ray childRay : behavior.onIntersection(ray, body, intersection)) {
+                pool.pushRay(childRay, true);
+            }
         }
         // Check if the intersection can reach lights for illumination.
         for (Light light : lights) {
-            if (IntersectionTester.canReach(bodies, light.getLocation())
-                    && perspective) {
-                // TODO illuminate
+            if (IntersectionTester.canReach(bodies, intersection.getIntersectionLocation(), light.getLocation())
+                    && projection.canReach(bodies, intersection.getIntersectionLocation())) {
+                projection.updateView(intersection.getIntersectionLocation(), light);
             }
         }
-        return new Ray
 
     }
 
-    protected final void traceRay(Collection<Body> bodies, RayPool pool, Ray ray) {
-        for (Body body : bodies) {
-            BodyIntersection intersection = body.intersection(ray);
-            if (intersection != null) {
-                update(pool, makeUpdates(pool, ray, body, intersection));
-            }
+    protected final void traceRay(Collection<Body> bodies, Collection<Light> lights, RayPool pool, Ray ray) {
+        BodyIntersection closestIntersection = IntersectionTester.findClosestIntersection(bodies, ray);
+        if (closestIntersection != null) {
+            makeUpdates(pool, ray, closestIntersection.getBody(), closestIntersection, bodies, lights);
         }
     }
 
-    protected abstract void renderScene(Collection<Body> bodies);
+    protected abstract void renderScene(Collection<Body> bodies, Collection<Light> lights, RayPool pool);
 
     public void render(Collection<Body> bodies, Collection<Light> lights, SceneSettings settings) {
-        buildRayPool(settings.getRaysPerLight());
-        renderScene(bodies);
+        buildRayPool(settings.getRayCount(), settings.getRayBounces());
+        renderScene(bodies, lights, pool);
     }
 }

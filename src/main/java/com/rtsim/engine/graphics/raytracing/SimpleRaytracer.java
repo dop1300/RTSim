@@ -1,27 +1,22 @@
 package com.rtsim.engine.graphics.raytracing;
 
 import java.util.Collection;
-import java.util.List;
-
-import com.rtsim.engine.graphics.Viewport;
+import com.rtsim.engine.graphics.view.Viewport;
+import com.rtsim.engine.graphics.light.Light;
 import com.rtsim.engine.physics.body.Body;
 
 public class SimpleRaytracer extends Raytracer {
 
-    public SimpleRaytracer(Viewport viewport) {
-        super(viewport);
+    public SimpleRaytracer(Viewport projection) {
+        super(projection);
     }
 
 
     @Override
-    public void renderScene(Collection<Body> bodies) {
+    public void renderScene(Collection<Body> bodies, Collection<Light> lights, RayPool pool) {
         try {
-            RayPool pool = getRayPool();
-            while(pool != null) {
-                while(pool.hasRaysRemaining()) {
-                    traceRay(bodies, pool, pool.popRay());
-                }
-                pool = getRayPool();
+            while(pool.hasRaysRemaining()) {
+                traceRay(bodies, lights, pool, pool.popRay());
             }
         } catch(InterruptedException e) {
             Thread.currentThread().interrupt();
