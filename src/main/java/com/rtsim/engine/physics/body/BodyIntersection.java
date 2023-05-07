@@ -2,8 +2,7 @@ package com.rtsim.engine.physics.body;
 
 import com.rtsim.engine.VectorD;
 
-public class BodyIntersection {
-    private VectorD intersectionLocation, intersectionNormal;
+public record BodyIntersection(VectorD intersectionLocation, VectorD intersectionNormal) {
 
     public VectorD getIntersectionLocation() {
         return intersectionLocation;

@@ -2,17 +2,15 @@ package com.rtsim.engine.graphics;
 
 import com.rtsim.engine.VectorD;
 
-public class ViewUpdate {
+public class LightingUpdate {
     private VectorD location;
     private float intensity;
     private Color color;
-    private boolean foreground;
 
-    public ViewUpdate(VectorD location, float intensity, Color color, boolean foreground) {
+    public LightingUpdate(VectorD location, float intensity, Color color) {
         this.location = location;
         this.intensity = intensity;
         this.color = color;
-        this.foreground = foreground;
     }
 
     public VectorD getLocation() {
@@ -21,10 +19,6 @@ public class ViewUpdate {
 
     public float getIntensity() {
         return intensity;
-    }
-
-    public boolean inForeground() {
-        return foreground;
     }
 
     public Color getColor() {
