@@ -30,7 +30,7 @@ public class IntersectionTester {
         for (Body body : bodies) {
             BodyIntersection intersection = body.intersection(ray);
             if (intersection != null) {
-                double distance = intersection.getIntersectionLocation().distance(ray.getLocation());
+                double distance = intersection.getIntersectionLocation().distance(ray.getStart());
                 if (distance < closestDistance) {
                     closestDistance = distance;
                     closestIntersection = intersection; 

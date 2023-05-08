@@ -36,9 +36,5 @@ public class Ray {
     public VectorD getStart() {
         return start;
     }
-
-    public VectorD getLocation() {
-        return null;
-    }
     
 }

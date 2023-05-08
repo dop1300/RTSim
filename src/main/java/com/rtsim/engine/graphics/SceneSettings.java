@@ -14,4 +14,8 @@ public class SceneSettings {
     public void setRaysPerLight(int raysPerLight) {
         this.raysPerLight = raysPerLight;
     }
+
+    public int getRayBounces() {
+        return 10;
+    }
 }

@@ -7,6 +7,8 @@ public class VectorD {
     private double[] values;
 
     public VectorD(double[] values) {
+        if (values == null)
+            throw new NullPointerException("Null array passed to VectorD constructor.");
         this.values = values;
     }
 
@@ -60,8 +62,31 @@ public class VectorD {
         return new MatrixD(new double[][] {Arrays.copyOf(values, values.length)});
     }
 
-    public VectorD cross(VectorD vertical) {
-        return null; // TODO finish
+    public VectorD cross(VectorD other) {
+        return new VectorD(new double[]{get(1) * other.get(2) - get(2) * other.get(1),
+            get(2) * other.get(0) - get(0) * other.get(2),
+            get(0) * other.get(1) - get(1) * other.get(0)
+        });
+    }
+
+    public int getSize() {
+        return values.length;
+    }
+
+    public double[] getValues() {
+        return values;
     }
  
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof VectorD) {
+            return Arrays.equals(values, ((VectorD) other).values);
+        } else
+            return false;
+    }
+
+    @Override
+    public String toString() {
+        return "VectorD(" + values.length + ", " + Arrays.toString(values) + ")";
+    }
 }
