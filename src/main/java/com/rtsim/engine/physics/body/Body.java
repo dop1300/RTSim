@@ -5,22 +5,17 @@ import com.rtsim.engine.graphics.raytracing.Ray;
 import com.rtsim.engine.graphics.raytracing.behavior.BodyBehavior;
 
 public abstract class Body {
-    private float percentLightAbsorbed;
     private BodyBehavior[] behaviors;
     private Material material;
 
     
-    protected Body(float percentLightAbsorbed, Material material, BodyBehavior[] behaviors) {
-        this.percentLightAbsorbed = percentLightAbsorbed;
+    protected Body(Material material, BodyBehavior[] behaviors) {
         this.behaviors = behaviors;
         this.material = material;
     }
 
     public abstract BodyIntersection intersection(Ray ray);
 
-    public float getPercentLightAbsorbed() {
-        return percentLightAbsorbed;
-    }
     
 
     public Material getMaterial() {

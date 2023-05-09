@@ -37,4 +37,8 @@ public class Ray {
         return start;
     }
     
+    @Override
+    public String toString() {
+        return "Ray(start=" + start + ", direction=" + direction + ")";
+    }
 }

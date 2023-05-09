@@ -28,9 +28,9 @@ public abstract class Viewport {
     }
 
 
-    public void updateView(VectorD intersectionLocation, Light light) {
+    public void updateView(VectorD intersectionLocation, Color color) {
         Point2I viewLocation = getViewablePixel(intersectionLocation);
-        render[viewLocation.getX()][viewLocation.getY()].mix(light.getColor(), light.getIntensity() * rayMixFactor);
+        render[viewLocation.getX()][viewLocation.getY()] = render[viewLocation.getX()][viewLocation.getY()].add(color);//, light.getIntensity() * rayMixFactor);
     }
 
     public abstract Ray createRay(int bounces);

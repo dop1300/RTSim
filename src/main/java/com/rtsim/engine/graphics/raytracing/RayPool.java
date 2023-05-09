@@ -11,6 +11,7 @@ public class RayPool {
     public RayPool() {
         rays = new LinkedList<>();
         activeRays = 0;
+        lock = new Object();
     }
 
     public Ray popRay() throws InterruptedException {

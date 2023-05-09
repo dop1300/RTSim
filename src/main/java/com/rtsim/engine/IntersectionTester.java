@@ -19,8 +19,13 @@ public class IntersectionTester {
         return null;
     }
 
-    public static boolean canReach(Collection<Body> bodies, VectorD location, VectorD vectorD) {
-        return false;
+    public static boolean canReach(Collection<Body> bodies, VectorD location, VectorD destination) {
+        Ray ray = new Ray(location, destination.subtract(location), 0);
+        for (Body body : bodies) {
+            if (body.intersection(ray) != null)
+                return false;
+        }
+        return true;
     }
 
     public static BodyIntersection findClosestIntersection(Collection<Body> bodies, Ray ray) {
@@ -37,6 +42,7 @@ public class IntersectionTester {
                 }
             }
         }
+        // System.out.println(ray + "\t" + closestDistance);
         return closestIntersection;
     }
 }

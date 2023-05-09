@@ -31,7 +31,7 @@ public class MatrixD {
     public VectorD getRow(int index) {
         double[] row = new double[values[0].length];
         for (int i = 0; i < row.length; i++)
-            row[i] = values[index][i];
+            row[i] = values[i][index];
         return new VectorD(row);
     }
 
@@ -45,10 +45,10 @@ public class MatrixD {
     }
 
     public MatrixD multiply(MatrixD other) {
-        double[][] result = new double[getWidth()][other.getHeight()];
-        for (int i = 0; i < getWidth(); i++) {
-            for (int j = 0; j < other.getHeight(); j++) {
-                result[i][j] = getRow(i).dot(other.getColumn(j));
+        double[][] result = new double[other.getWidth()][getHeight()];
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < other.getWidth(); x++) {
+                result[x][y] = getRow(y).dot(other.getColumn(x));
             }
         }
         return new MatrixD(result);

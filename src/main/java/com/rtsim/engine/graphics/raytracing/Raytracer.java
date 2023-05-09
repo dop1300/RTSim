@@ -2,12 +2,12 @@ package com.rtsim.engine.graphics.raytracing;
 
 import java.util.Collection;
 import com.rtsim.engine.IntersectionTester;
-import com.rtsim.engine.graphics.SceneSettings;
 import com.rtsim.engine.graphics.view.Viewport;
 import com.rtsim.engine.graphics.light.Light;
 import com.rtsim.engine.graphics.raytracing.behavior.BodyBehavior;
 import com.rtsim.engine.physics.body.Body;
 import com.rtsim.engine.physics.body.BodyIntersection;
+import com.rtsim.engine.settings.Settings;
 
 public abstract class Raytracer {
     private RayPool pool;
@@ -15,6 +15,10 @@ public abstract class Raytracer {
 
     protected Raytracer(Viewport projection) {
         this.projection = projection;
+    }
+
+    public void setViewport(Viewport viewport) {
+        projection = viewport;
     }
 
     private void buildRayPool(int rayCount, int rayBounces) {
@@ -36,7 +40,7 @@ public abstract class Raytracer {
         for (Light light : lights) {
             if (IntersectionTester.canReach(bodies, intersection.getIntersectionLocation(), light.getLocation())
                     && projection.canReach(bodies, intersection.getIntersectionLocation())) {
-                projection.updateView(intersection.getIntersectionLocation(), light);
+                projection.updateView(intersection.getIntersectionLocation(), body.getMaterial().interact(light));
             }
         }
 
@@ -51,8 +55,8 @@ public abstract class Raytracer {
 
     protected abstract void renderScene(Collection<Body> bodies, Collection<Light> lights, RayPool pool);
 
-    public void render(Collection<Body> bodies, Collection<Light> lights, SceneSettings settings) {
-        buildRayPool(settings.getRayCount(), settings.getRayBounces());
+    public void render(Collection<Body> bodies, Collection<Light> lights, Settings settings) {
+        buildRayPool((Integer) settings.getSetting(Settings.RAY_COUNT_SETTING), (Integer) settings.getSetting(Settings.RAY_BOUNCES_SETTING));
         renderScene(bodies, lights, pool);
     }
 }

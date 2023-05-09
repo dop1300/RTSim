@@ -1,8 +1,5 @@
 package com.rtsim.engine.physics.body;
 
-import java.util.Arrays;
-import java.util.Vector;
-
 import com.rtsim.engine.MatrixD;
 import com.rtsim.engine.VectorD;
 import com.rtsim.engine.graphics.material.Material;
@@ -12,8 +9,8 @@ import com.rtsim.engine.graphics.raytracing.behavior.BodyBehavior;
 public class Triangle extends Body {
     private VectorD[] points;
 
-    public Triangle(float percentLightAbsorbed, VectorD[] points, Material material, BodyBehavior[] behaviors) {
-        super(percentLightAbsorbed, material, behaviors);
+    public Triangle(VectorD[] points, Material material, BodyBehavior[] behaviors) {
+        super(material, behaviors);
         this.points = points;
     }
     
@@ -29,15 +26,17 @@ public class Triangle extends Body {
             double ut = new MatrixD(new VectorD[] {b, v, n}).determinant() / aDet;
             double vt = new MatrixD(new VectorD[] {u, b, n}).determinant() / aDet;
             // double nt = new MatrixD(new VectorD[] {u, v, b}).determinant() / aDet;
-            if (ut >= 0 && ut <= 1 && vt >= 0 && vt <= 1)
-                return new BodyIntersection(b, n);
+            if (ut >= 0 && ut <= 1 && vt >= 0 && vt <= 1) {
+                // System.out.println("Ow!");
+                return new BodyIntersection(this, b, n);
+            }
         }
         return null;
 
     }
 
     public static void main(String[] args) {
-        Triangle triangle1 = new Triangle(0, new VectorD[] {
+        Triangle triangle1 = new Triangle(new VectorD[] {
             new VectorD(new double[] {0, 0d, 0d}),
             new VectorD(new double[] {0d, 1d, 0d}),
             new VectorD(new double[] {1d, 1d, 0d}) 

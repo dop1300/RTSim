@@ -13,11 +13,8 @@ public class Color {
         return new Color(r * percent, g * percent, b * percent);
     }
 
-    public void add(Color other) {
-        r = (r + other.r) / 2;
-        g = (g + other.g) / 2;
-        b = (b + other.b) / 2;
-        
+    public Color add(Color other) {
+        return new Color((r + other.r) / 2, (g + other.g) / 2, (b + other.b) / 2);
     }
 
     public float getRed() {
@@ -34,6 +31,10 @@ public class Color {
 
     public Color mix(Color color, float factor) {
         float complement = 1 - factor;
-        return new Color((r * complement + color.r * factor)/2,(g * complement + color.g * factor)/2,(b * complement + color.b * factor)/2);
+        return new Color(r * complement + color.r * factor, g * complement + color.g * factor, b * complement + color.b * factor);
+    }
+
+    public String toString() {
+        return "Color(r=" + r + ", g=" + g + ", b=" + b + ")";
     }
 }
