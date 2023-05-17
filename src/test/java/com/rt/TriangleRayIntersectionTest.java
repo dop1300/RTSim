@@ -34,5 +34,7 @@ public class TriangleRayIntersectionTest {
         Ray ray1 = new Ray(new VectorD(new double[] {0d, 0d, -1d}), new VectorD(new double[] {10, 0.025, 1d}), 0);
         BodyIntersection intersection = triangle1.intersection(ray1);
         assertNull(intersection);
+        Ray ray2 = new Ray(new VectorD(new double[] {0, 0, -1}), new VectorD(new double[] {0.75, 0.25, 1}), 0);
+        assertNull(triangle1.intersection(ray2));
     }
 }

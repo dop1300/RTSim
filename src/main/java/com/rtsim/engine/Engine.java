@@ -5,7 +5,6 @@ import com.rtsim.engine.graphics.Color;
 import com.rtsim.engine.graphics.view.Viewport;
 import com.rtsim.engine.graphics.light.Light;
 import com.rtsim.engine.graphics.raytracing.Raytracer;
-import com.rtsim.engine.graphics.raytracing.ThreadedRaytracer;
 import com.rtsim.engine.physics.body.Body;
 import com.rtsim.engine.settings.Settings;
 
@@ -13,8 +12,8 @@ public class Engine {
     private Raytracer raytracer;
     private Viewport viewport;
 
-    public Engine(Viewport viewport) {
-        raytracer = new ThreadedRaytracer(viewport, 16);
+    public Engine(Viewport viewport, Raytracer raytracer) {
+        this.raytracer = raytracer;
         this.viewport = viewport;
     }
 

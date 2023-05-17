@@ -13,9 +13,7 @@ import com.rtsim.engine.physics.body.Body;
 
 
 public class RectangularProjection extends Viewport {
-    private VectorD position, planeNormal, planeLocation, horizontal, vertical;
-    private double inclusionThreshold;
-    private VectorD[][] buckets;
+    private VectorD position, planeNormal, planeLocation, horizontal, vertical, bottomLeft;
     private double fov, size;
     private Random random;
     /**
@@ -33,7 +31,6 @@ public class RectangularProjection extends Viewport {
         this.fov = fov;
         this.position = position;
         random = new Random();
-        buckets = new VectorD[xResolution][yResolution];
         createBuckets(rotation, focalDistance);
     }
 
@@ -43,60 +40,34 @@ public class RectangularProjection extends Viewport {
         MatrixD rotationTransform = MatrixD.createXRotationMatrix(rotation.get(0))
             .multiply(MatrixD.createYRotationmatrix(rotation.get(1)))
             .multiply(MatrixD.createZRotationMatrix(rotation.get(2)));
-        horizontal = rotationTransform.multiply(new VectorD(new double[]{1, 0, 0})).getColumn(0);
-        vertical = rotationTransform.multiply(new VectorD(new double[]{0, 1, 0})).getColumn(0);
+        horizontal = rotationTransform.multiply(new VectorD(new double[]{1, 0, 0})).getColumn(0).normalize();
+        vertical = rotationTransform.multiply(new VectorD(new double[]{0, 1, 0})).getColumn(0).normalize();
         VectorD perpendicular = horizontal.cross(vertical);
         // Save the plane location for later intersection testing.
         planeNormal = perpendicular;
         planeLocation = position.add(perpendicular.scale(focalDistance));
         // Create buckets along the plane.
         size = 2 * Math.abs(Math.cos((Math.PI - fov) / 2));
-        inclusionThreshold = size / Math.min(getXResolution(), getYResolution());
-        VectorD bottomLeft = planeLocation.subtract(horizontal.scale(size / 2)).subtract(vertical.scale(size / 2));
-        VectorD horizontalInterval = horizontal.scale(size / getXResolution());
-        VectorD verticalInterval = vertical.scale(size / getYResolution());
-        for (int x = 0; x < getXResolution(); x++) {
-            VectorD xLocation = bottomLeft.add(horizontalInterval.scale(x));
-            for (int y = 0; y < getYResolution(); y++) {
-                buckets[x][y] = xLocation.add(verticalInterval.scale(y));
-            }
-        }
-        System.out.println(buckets[0][0] + "\t" + buckets[getXResolution() - 1][getYResolution() - 1]);
+        bottomLeft = planeLocation.subtract(horizontal.scale(size / 2)).subtract(vertical.scale(size / 2));
     }
 
     @Override
     public Ray createRay(int bounces) {
-        double drift = Math.random() * inclusionThreshold;
-        VectorD direction = buckets[random.nextInt(0, getXResolution())][random.nextInt(getYResolution())]
-            .add(horizontal.scale(drift))
-            .add(vertical.scale(drift))
-            .subtract(position);
+        VectorD direction = planeLocation.add(horizontal.scale(size * (Math.random() - 0.5))).add(vertical.scale(size * (Math.random() - 0.5))).subtract(position);
         return new Ray(position, direction, bounces);
     }
 
     @Override
     public Point2I getViewablePixel(VectorD location) {
         VectorD cameraDirection = position.subtract(location).normalize();
-        double t = planeLocation.subtract(location).dot(planeNormal) / cameraDirection.dot(planeNormal);
-        if (t == 0)
-            return null; // Does not intersect.
-        VectorD intersection = cameraDirection.scale(t).add(location);
-        Point2I closestPixel = null;
-        double closestDistance = Double.POSITIVE_INFINITY;
-        for(int x = 0; x < buckets.length; x++) {
-            for (int y = 0; y < buckets[0].length; y++) {
-                double distance = buckets[x][y].distance(intersection);
-                if (distance < closestDistance) {
-                    closestPixel = new Point2I(x, y);
-                    closestDistance = distance;
-                }
-            }
+        VectorD viewIntersectionScalars = IntersectionTester.calculatePlaneIntersection(bottomLeft, horizontal, vertical, cameraDirection, position, cameraDirection);
+        if (viewIntersectionScalars != null) {
+            double x = -viewIntersectionScalars.get(0) / size * getXResolution();
+            double y = -viewIntersectionScalars.get(1) / size * getYResolution();
+            if (x > 0 && y > 0 && x < getXResolution() && y < getYResolution())
+                return new Point2I((int) x, (int) y);
         }
-        if (closestDistance < inclusionThreshold) // avoid things on the plane, but far off
-            return closestPixel;
-        else
-            return null;
-
+        return null;
     }
 
     @Override

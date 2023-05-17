@@ -33,6 +33,13 @@ public class ThreadedRaytracer extends Raytracer {
             threadPool.execute(t);
         }
         threadPool.shutdown();
+        // while(threadPool.isShutdown()) {
+        //     try {
+        //         Thread.sleep(100);
+        //     } catch (InterruptedException e) {
+        //         Thread.currentThread().interrupt();
+        //     }
+        // }
     }
     
 }

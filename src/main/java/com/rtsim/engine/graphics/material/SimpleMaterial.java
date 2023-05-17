@@ -1,5 +1,6 @@
 package com.rtsim.engine.graphics.material;
 
+import com.rtsim.engine.VectorD;
 import com.rtsim.engine.graphics.Color;
 import com.rtsim.engine.graphics.light.Light;
 
@@ -25,8 +26,8 @@ public class SimpleMaterial implements Material {
     }
 
     @Override
-    public Color interact(Light light) {
-        return light.getColor().scale(light.getIntensity()).mix(specularColor, specularMix).add(diffuseColor);
+    public Color interact(Light light, VectorD location) {
+        return light.getColor(location).scale(light.getIntensity()).mix(specularColor, specularMix).add(diffuseColor);
     }
     
 }

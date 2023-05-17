@@ -13,7 +13,6 @@ public class VectorD {
     }
 
     public VectorD normalize() {
-        double a = 1/magnitude();
         return scale(1/magnitude());
     }
 

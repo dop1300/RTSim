@@ -45,4 +45,24 @@ public class IntersectionTester {
         // System.out.println(ray + "\t" + closestDistance);
         return closestIntersection;
     }
+
+    public static VectorD calculatePlaneIntersection(VectorD corner, VectorD horizontal, VectorD vertical, VectorD normal, Ray ray) {
+        return calculatePlaneIntersection(corner, horizontal, vertical, normal, ray.getStart(), ray.getDirection());
+    }
+    
+    public static VectorD calculatePlaneIntersection(VectorD corner, VectorD horizontal, VectorD vertical, VectorD normal, VectorD rayStart, VectorD rayDirection) {
+        double t = corner.subtract(rayStart).dot(normal) / rayDirection.dot(normal);
+        if (t != 0) {
+            double aDet = new MatrixD(new VectorD[] {horizontal, vertical, normal}).determinant();
+            if (aDet != 0) {
+                VectorD b = rayStart.add(rayDirection.scale(t));
+                double ut = new MatrixD(new VectorD[] {b, vertical, normal}).determinant() / aDet;
+                double vt = new MatrixD(new VectorD[] {horizontal, b, normal}).determinant() / aDet;
+                double nt = new MatrixD(new VectorD[] {horizontal, vertical, b}).determinant() / aDet;
+                return new VectorD(new double[] {ut, vt, nt});
+            }
+        }
+        return null;
+        
+    }
 }

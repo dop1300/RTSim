@@ -20,7 +20,10 @@ public class RayPool {
                 Thread.sleep(POOL_WAIT);
             }
             synchronized(lock) {
-                return rays.removeFirst();
+                if (rays.isEmpty()) {
+                    return null;
+                } else
+                    return rays.removeFirst();
             }
         } else {
             return null;

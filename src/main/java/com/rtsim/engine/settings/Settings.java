@@ -9,8 +9,8 @@ public class Settings {
     
     public Settings() {
         settings = new HashMap<>();
-        settings.put(RAY_COUNT_SETTING, new SettingValue(1000000));
-        settings.put(RAY_BOUNCES_SETTING, new SettingValue(3));
+        settings.put(RAY_COUNT_SETTING, new SettingValue(10000000));
+        settings.put(RAY_BOUNCES_SETTING, new SettingValue(50));
     }
     
     public Object getSetting(String name) {

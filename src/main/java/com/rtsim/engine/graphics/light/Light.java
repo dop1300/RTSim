@@ -23,8 +23,8 @@ public abstract class Light {
         return intensity;
     }
 
-    public Color getColor() {
-        return color;
+    public Color getColor(VectorD other) {
+        return color.scale((float) Math.min(0, 1 - intensity/other.distance(location)));
     }
 
     public VectorD getLocation() {

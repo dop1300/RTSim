@@ -40,7 +40,7 @@ public abstract class Raytracer {
         for (Light light : lights) {
             if (IntersectionTester.canReach(bodies, intersection.getIntersectionLocation(), light.getLocation())
                     && projection.canReach(bodies, intersection.getIntersectionLocation())) {
-                projection.updateView(intersection.getIntersectionLocation(), body.getMaterial().interact(light));
+                projection.updateView(intersection.getIntersectionLocation(), body.getMaterial().interact(light, intersection.getIntersectionLocation()));
             }
         }
 
